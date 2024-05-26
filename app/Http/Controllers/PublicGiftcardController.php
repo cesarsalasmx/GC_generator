@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Helpers\CodeHelper;
 use App\Helpers\ShopifyHelper;
 use Carbon\Carbon;
+use App\Helpers\WhatsappHelper;
 use Illuminate\Support\Facades\Log;
 
 class PublicGiftcardController extends Controller
@@ -32,8 +33,8 @@ class PublicGiftcardController extends Controller
         }
 
         $giftcard = Giftcards::where('code', $codigoSinGuiones)
-                            ->where('pin', $request->pin)
-                            ->first();
+            ->where('pin', $request->pin)
+            ->first();
 
         if ($giftcard) {
             if (!$giftcard->status) {
@@ -47,8 +48,9 @@ class PublicGiftcardController extends Controller
 
                 $fechaFormateada = Carbon::parse($vigencia_gc)->format('Y-m-d');
 
-                $shopify = ShopifyHelper::create_gc($giftcard->code,$valor_gc,$fechaFormateada);
+                $shopify = ShopifyHelper::create_gc($giftcard->code, $valor_gc, $fechaFormateada);
                 Log::info('Valor de la variable: ', ['variable' => $shopify]);
+                $whatsapp = WhatsappHelper::newWhatsWelcome($giftcard->code, $request->phone, $fechaFormateada, $valor_gc);
                 return redirect()->back()->with('success', 'Giftcard activada correctamente.');
             } else {
                 return redirect()->back()->with('error', 'La giftcard ya está activada.');
