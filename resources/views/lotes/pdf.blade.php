@@ -18,12 +18,20 @@
 </head>
 <body>
     <h1>Giftcards del Lote #{{ $lote->id }}</h1>
-    <p><strong>Comentarios:</strong> {{ $lote->comentarios }}</p>
-    <p><strong>Cantidad GC:</strong> {{ $lote->cantidad_gc }}</p>
-    <p><strong>Vigencia GC:</strong> {{ $lote->vigencia_gc }}</p>
-    <p><strong>Prefijo GC:</strong> {{ $lote->prefijo_gc }}</p>
-    <p><strong>Valor GC:</strong> {{ $lote->valor_gc }}</p>
-
+    <table FRAME="void" RULES="rows">
+        <tr>
+            <td><strong>Valor:</strong> {{ $lote->valor_gc }}</td>
+            <td><strong>Vigencia:</strong> {{ $lote->vigencia_gc }}</td>
+        </tr>
+        <tr>
+            <td><strong>Cantidad:</strong> {{ $lote->cantidad_gc }}</td>
+            <td><strong>Prefijo:</strong> {{ $lote->prefijo_gc }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong>Comentarios:{{ $lote->comentarios }}</strong></td>
+        </tr>
+    </table>
+    <br><br><br>
     <table>
         <thead>
             <tr>
@@ -37,11 +45,11 @@
         <tbody>
             @foreach ($giftcards as $giftcard)
                 <tr>
-                    <td>{{ $giftcard->code }}</td>
+                    <td>{{ $giftcard->internal_code }}</td>
                     <td>{{ $giftcard->pin }}</td>
                     <td>{{ $giftcard->phone }}</td>
                     <td>{{ $giftcard->email }}</td>
-                    <td>{{ $giftcard->status }}</td>
+                    <td>{{ $giftcard->status ? 'Activada' : 'Sin activar' }}</td>
                 </tr>
             @endforeach
         </tbody>

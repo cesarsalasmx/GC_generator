@@ -5,7 +5,7 @@
 
 <label class="text-xs text-gray-700 uppercase">Vigencia de Giftcards</label>
 <span class="text-xs text-red-600">@error('vigencia_gc') {{ $message }} @enderror</span>
-<input type="date" name="vigencia_gc" id="vigencia_gc" class="w-full mb-4 border-gray-200 rounded" value="{{ $lote->vigencia_gc }}" required/>
+<input type="date" name="vigencia_gc" id="vigencia_gc" class="w-full mb-4 border-gray-200 rounded" value="{{ $lote->vigencia_gc }}" required disabled/>
 
 <label class="text-xs text-gray-700 uppercase">Valor</label>
 <span class="text-xs text-red-600">@error('valor_gc') {{ $message }} @enderror</span>

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('giftcards', function (Blueprint $table) {
             $table->id();
             $table->string('code', 50)->unique(); // Código de la tarjeta, varchar(50)
+            $table->String('internal_code',50)->unique();
+            $table->String('name')->nullable();
             $table->string('pin', 10); // PIN de la tarjeta, varchar(10)
             $table->string('phone', 50)->nullable(); // Teléfono asociado a la tarjeta, varchar(50)
             $table->string('email')->nullable();

@@ -13,7 +13,7 @@
 
 <label class="text-xs text-gray-700 uppercase">Prefijo de las giftcards</label>
 <span class="text-xs text-red-600">@error('prefijo_gc') {{ $message }} @enderror</span>
-<input type="text" name="prefijo_gc"  id="prefijo_gc" class="w-full mb-4 border-gray-200 rounded" value="{{ old('prefijo_gc',$lote->prefijo_gc) }}" />
+<input type="text" name="prefijo_gc"  id="prefijo_gc" class="w-full mb-4 border-gray-200 rounded" value="{{ old('prefijo_gc',$lote->prefijo_gc) }}" maxlength="8"/>
 
 <label class="text-xs text-gray-700 uppercase">Comentarios</label>
 <span class="text-xs text-red-600">@error('comentarios') {{ $message }} @enderror</span>

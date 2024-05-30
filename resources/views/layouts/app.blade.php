@@ -10,7 +10,8 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        <!-- HeroIcons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/heroicons/1.0.6/heroicons.min.css" integrity="sha384-VPsy6JZ7FNn5gDf5tbQZCkG9X44TFAL1ECPS9XgThvvLV7m1OSHQar7qzAXvOq7r" crossorigin="anonymous">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>

@@ -1,11 +1,15 @@
 @csrf
-<label class="text-xs text-gray-700 uppercase">Código de la Giftcard</label>
+<label class="text-xs text-gray-700 uppercase">Código Interno</label>
 <span class="text-xs text-red-600">@error('code') {{ $message }} @enderror</span>
-<input type="text" name="code" id="code" class="w-full mb-4 border-gray-200 rounded" value="{{ $giftcard->code }}" required disabled/>
+<input type="text" name="internal_code" id="internal_codecode" class="w-full mb-4 border-gray-200 rounded" value="{{ $giftcard->internal_code }}" required disabled/>
 
 <label class="text-xs text-gray-700 uppercase">Pin de activación</label>
 <span class="text-xs text-red-600">@error('pin') {{ $message }} @enderror</span>
 <input type="number" name="pin" id="pin" class="w-full mb-4 border-gray-200 rounded" value="{{ $giftcard->pin }}" required disabled/>
+
+<label class="text-xs text-gray-700 uppercase">Nombre completo</label>
+<span class="text-xs text-red-600">@error('name') {{ $message }} @enderror</span>
+<input type="text" name="name" id="name" class="w-full mb-4 border-gray-200 rounded" value="{{ $giftcard->name }}" />
 
 <label class="text-xs text-gray-700 uppercase">Email</label>
 <span class="text-xs text-red-600">@error('emial') {{ $message }} @enderror</span>

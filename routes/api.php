@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\APIGiftcardController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\GiftcardsController;
 
-Route::middleware('api')->group(function () {
-    Route::post('/activate-giftcard', [APIGiftcardController::class, 'activate']);
-});
+Route::post('v1/giftcards/activate',[GiftcardsController::class ,'activate'])->name('v1.giftcards.activate');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Giftcards;
 use App\Models\Lotes;
 use Illuminate\Http\Request;
+use Shopify\Rest\Admin2022_04\GiftCard;
 
 class LotesController extends Controller
 {
@@ -38,7 +39,8 @@ class LotesController extends Controller
         // ];
         for($i=0; $i < $request->cantidad_gc; $i++){
             $giftcard = new Giftcards();
-            $giftcard->code = Giftcards::generateUniqueCode($request->prefijo_gc);
+            $giftcard->code = Giftcards::generateUniqueCode($request->prefijo_gc,16);
+            $giftcard->internal_code = GiftCards::generateUniqueCode($request->prefijo_gc,12);
             $giftcard->pin = Giftcards::generatePin();
             $giftcard->phone = '';
             $giftcard->email = '';

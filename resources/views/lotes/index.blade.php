@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="flex items-center justify-between text-xl font-semibold leading-tight text-gray-800">
-            {{ __('lotes') }}
+            {{ __('Lotes') }}
             <a href="{{ route('lotes.create') }}" class="px-4 py-2 text-white bg-gray-800 rounded ">Crear Lote</a>
         </h2>
     </x-slot>
@@ -17,7 +17,8 @@
                                 <td class="px-6 py-4">Cantidad</td>
                                 <td class="px-6 py-4">Valor</td>
                                 <td class="px-6 py-4">Vigencia</td>
-                                <td class="px-6 py-4">Editar</td>
+                                <td class="px-6 py-4">Ver detalles</td>
+                                <td class="px-6 py-4">Giftcards</td>
 
                         </thead>
                         @foreach($lotes as $lote)
@@ -27,7 +28,8 @@
                                 <td class="px-6 py-4">{{ $lote->cantidad_gc }}</td>
                                 <td class="px-6 py-4">{{ $lote->valor_gc }}</td>
                                 <td class="px-6 py-4">{{ $lote->vigencia_gc }}</td>
-                                <td class="px-6 py-4"><a href="{{ route('lotes.edit',$lote) }}" class="text-indigo-600">Editar</a></td>
+                                <td class="px-6 py-4"><a href="{{ route('lotes.edit',$lote) }}" class="text-indigo-600">Ver detalles</a></td>
+                                <td class="px-6 py-4"><a href="{{ route('lotes.show',$lote) }}" class="px-4 py-2 text-white bg-gray-800 rounded">Giftcards del lote</a></td>
                             </tr>
                         @endforeach
                     </table>

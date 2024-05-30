@@ -17,36 +17,30 @@
                 <h1 class="text-2xl font-bold">Activa tu Giftcard</h1>
             </div>
         </header>
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
         <!-- Cuerpo principal -->
         <main class="container flex-grow p-4 mx-auto">
             <div class="p-6 bg-white rounded-lg shadow-md">
                 <form method="POST" action="{{ route('giftcards.activate') }}" class="space-y-6">
                     @csrf
                     <div>
-                        <label for="code" class="block text-sm font-medium text-gray-700">Giftcard Code</label>
-                        <input type="text" id="code" name="code" required class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                        <label for="internal_code" class="block text-sm font-medium text-gray-700">Codigo (12 digitos)</label>
+                        <input type="text" id="internal_code" name="internal_code"  class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
                     </div>
                     <div>
-                        <label for="pin" class="block text-sm font-medium text-gray-700">Pin</label>
-                        <input type="text" id="pin" name="pin" required class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                        <label for="pin" class="block text-sm font-medium text-gray-700">Pin (3 digitos)</label>
+                        <input type="text" id="pin" name="pin" maxlength="3" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
                     </div>
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+                        <input type="tel" id="name" name="name"  class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" id="email" name="email" required class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                        <label for="phone" class="block text-sm font-medium text-gray-700">Número de teléfono</label>
+                        <input type="tel" id="phone" name="phone"  class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+                        <input type="email" id="email" name="email"  class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
                     </div>
                     <div>
                         <input type="submit" value="Activate Giftcard" class="flex justify-center w-full px-4 py-2 text-sm font-medium bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -54,7 +48,7 @@
                 </form>
             </div>
         </main>
-
+        @include('modal')
         <!-- Pie de página -->
         <footer class="p-4 mt-4 text-white bg-gray-800">
             <div class="container mx-auto text-center">
@@ -64,7 +58,7 @@
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const codeInput = document.getElementById('code');
+        const codeInput = document.getElementById('internal_code');
 
         codeInput.addEventListener('input', function () {
             let value = codeInput.value.toUpperCase();
@@ -76,23 +70,23 @@
             value = value.replace(/[^a-zA-Z0-9]/g, '');
 
             // Limitar a 16 caracteres alfanuméricos
-            if (value.length > 16) {
-                value = value.substring(0, 16);
+            if (value.length > 12) {
+                value = value.substring(0, 12);
             }
 
             // Agrupar en segmentos de 4 caracteres
             let formattedValue = value.match(/.{1,4}/g)?.join('-') || '';
 
             // Limitar a 19 caracteres en total con guiones
-            if (formattedValue.length > 19) {
-                formattedValue = formattedValue.substring(0, 19);
+            if (formattedValue.length > 15) {
+                formattedValue = formattedValue.substring(0, 15);
             }
 
             codeInput.value = formattedValue;
 
             // Mostrar un mensaje de error si el código no es válido
             const errorMessage = document.getElementById('codigo-error');
-            if (value.length !== 16) {
+            if (value.length !== 12) {
                 errorMessage.textContent = 'El código debe tener exactamente 16 caracteres alfanuméricos.';
             } else {
                 errorMessage.textContent = '';

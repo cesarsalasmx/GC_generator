@@ -9,7 +9,7 @@ class WhatsappHelper{
     public static function newWhatsWelcome($code, $numero_tel, $vigencia, $valor)
     {
         $remitente = "César Salas";
-        $tienda_cliente = "Respeto por el café";
+        $tienda_cliente = "Café punta del cielo";
         $url = "https://puntadelcielo.com.mx/";
         $lema = "Respeto por el café";
         $template = config('whatsapp.template');

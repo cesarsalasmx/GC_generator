@@ -12,6 +12,7 @@ class Giftcards extends Model
     protected $fillable = [
         'code',
         'pin',
+        'name',
         'phone',
         'email',
         'status',
@@ -21,10 +22,10 @@ class Giftcards extends Model
     {
         return $this->belongsTo(Lotes::class,'lotes_id');
     }
-    public static function generateUniqueCode($prefix = '')
+    public static function generateUniqueCode($prefix = '',$length = 16)
     {
         do {
-            $random = strtoupper(Str::random(16 - strlen($prefix)));
+            $random = strtoupper(Str::random($length - strlen($prefix)));
             $code = $prefix . $random;
         } while (self::where('code', $code)->exists());
 
