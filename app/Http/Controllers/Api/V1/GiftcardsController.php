@@ -61,12 +61,14 @@ class GiftcardsController extends Controller
                     $giftcard->name = $request->name;
                     $giftcard->phone = $request->phone;
                     $giftcard->save();
-
+                    $responseCode = CodeHelper::protectedCode($giftcard->code);
                     WhatsappHelper::newWhatsWelcome($giftcard->code, $request->phone, $fechaFormateada, $valor_gc);
                     return response()->json([
                         'status' => 200,
                         'code' => 'success',
-                        'message' => 'Giftcard activada correctamente.'
+                        'message' => 'Giftcard activada correctamente.',
+                        'giftcard' => $responseCode,
+                        'id' => $giftcard->id
                     ],200);
                     //return redirect()->back()->with('success', 'Giftcard activada correctamente.');
                 } else {
