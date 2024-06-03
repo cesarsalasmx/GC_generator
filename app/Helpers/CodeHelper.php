@@ -22,4 +22,12 @@ class CodeHelper
         // Elimina guiones y espacios
         return preg_replace('/[\s-]+/', '', $code);
     }
+    public static function protectedCode($code) {
+        if (strlen($code) !== 16) {
+            return 'Código inválido';
+        }
+        $parts = str_split($code, 4);
+        $parts[1] = $parts[2] = '****';
+        return implode('-', $parts);
+    }
 }
