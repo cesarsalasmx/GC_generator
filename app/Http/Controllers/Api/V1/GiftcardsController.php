@@ -49,10 +49,10 @@ class GiftcardsController extends Controller
                     $shopify = ShopifyHelper::create_gc($giftcard->code, $valor_gc, $fechaFormateada);
                     if(empty($shopify)){
                         return response()->json([
-                            'status' => 500,
+                            'status' => 502,
                             'code' => 'error',
-                            'message' => 'La giftcard no se ha activado correctamente.'
-                        ],500);
+                            'message' => 'La giftcard no se ha activado correctamente debido a un problema en la conexión con la tienda.'
+                        ],502);
                         //return redirect()->back()->with('error', 'La giftcard no se ha activado correctamente.');
                     }
 
@@ -73,18 +73,18 @@ class GiftcardsController extends Controller
                     //return redirect()->back()->with('success', 'Giftcard activada correctamente.');
                 } else {
                     return response()->json([
-                        'status' => 500,
+                        'status' => 422,
                         'code' => 'error',
                         'message' => 'La giftcard no se ha activado correctamente.'
-                    ],500);
+                    ],422);
                     //return redirect()->back()->with('error', 'La giftcard ya está activada.');
                 }
             } else {
                 return response()->json([
-                    'status' => 400,
+                    'status' => 409,
                     'code' => 'error',
                     'message' => 'Código o PIN incorrectos. Por favor, verifica la información e intenta nuevamente.'
-                ],400);
+                ],409);
                 //return redirect()->back()->with('error', 'Código o PIN incorrectos. Por favor, verifica la información e intenta nuevamente.');
             }
         } catch (\Exception $e) {
