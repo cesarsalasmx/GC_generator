@@ -1,10 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="flex items-center justify-between text-xl font-semibold leading-tight text-gray-800">
-            {{ __('giftcards') }}
-            <a href="{{ route('lotes.create') }}" class="px-4 py-2 text-white bg-gray-800 rounded ">Crear Lote</a>
-            <a href="{{ route('export.pdf', $lote->id) }}" class="px-4 py-2 text-white bg-gray-800 rounded ">Exportar Data</a>
-
+            <span>{{ __('giftcards') }}</span>
+            <div>
+                <a href="{{ route('lotes.create') }}" class="px-4 py-2 text-white bg-gray-800 rounded ">Crear Lote</a>
+                <a href="{{ route('export.pdf', $lote->id) }}" class="px-4 py-2 text-white bg-gray-800 rounded ">Exportar a PDF</a>
+                <a href="{{ route('lotes.export', $lote->id) }}" class="px-4 py-2 text-white bg-gray-800 rounded ">Exportar a CSV</a>
+            </div>
         </h2>
     </x-slot>
 

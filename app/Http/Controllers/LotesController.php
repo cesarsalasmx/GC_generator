@@ -8,6 +8,8 @@ use App\Models\Tienda;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Helpers\LotesHelper;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Log;
 
 class LotesController extends Controller
@@ -35,10 +37,15 @@ class LotesController extends Controller
             $query->where('tienda_id', $tiendaId);
         }
         $lotes = $query->latest()->paginate();
+        $activeGiftcardsCounts = [];
+        foreach ($lotes as $lote) {
+            $activeGiftcardsCounts[$lote->id] = LotesHelper::countActiveGiftcards($lote->id);
+        }
         return view ('lotes.index', [
             'lotes' => $lotes,
             'tiendas' => $tiendas,
-            'selectedTienda' => $tiendaId
+            'selectedTienda' => $tiendaId,
+            'activeGiftcardsCounts' => $activeGiftcardsCounts
         ]);
     }
     public function create(Lotes $lote){
@@ -115,5 +122,47 @@ class LotesController extends Controller
         $giftcards = $lote->giftcards()->paginate(20);
 
         return view('lotes.show', compact('lote', 'giftcards'));
+    }
+    public function exportGiftcardsToCsv($loteId){
+        $lote = Lotes::findOrFail($loteId);
+        $giftcards = Giftcards::where('lotes_id', $loteId)->get();
+
+        $filename = "giftcards_lote_{$loteId}.csv";
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
+
+        $columns = ['Codigo', 'Pin', 'Nombre', 'Telefono', 'Email', 'Estado de la giftcard', 'Valor', 'Vigencia', 'Prefijo', 'Tienda', 'Comentarios'];
+
+        $callback = function() use($giftcards, $lote, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($giftcards as $giftcard) {
+                $row = [
+                    $giftcard->internal_code,
+                    $giftcard->pin,
+                    $giftcard->name,
+                    $giftcard->phone,
+                    $giftcard->email,
+                    $giftcard->status ? 'Active' : 'Inactive',
+                    $lote->valor_gc,
+                    $lote->vigencia_gc,
+                    $lote->prefijo_gc,
+                    $lote->tienda->name ?? '',
+                    $lote->comentarios,
+                ];
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return Response::stream($callback, 200, $headers);
     }
 }

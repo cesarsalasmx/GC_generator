@@ -34,4 +34,5 @@ Route::resource('giftcards', GiftcardsController::class)->middleware(['auth', 'v
 Route::resource('tienda-user', TiendaUserController::class)->middleware(['auth', 'verified']);
 
 Route::get('/export-pdf/{loteId}', [ExportController::class, 'exportPDF'])->name('export.pdf');
+Route::get('lotes/{lote}/export', [LotesController::class, 'exportGiftcardsToCsv'])->name('lotes.export');
 require __DIR__.'/auth.php';

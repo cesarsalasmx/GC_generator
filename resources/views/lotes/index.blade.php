@@ -29,7 +29,7 @@
                         <thead>
                                 <td class="px-6 py-4">ID</td>
                                 <td class="px-6 py-4">Prefijo</td>
-                                <td class="px-6 py-4">Cantidad</td>
+                                <td class="px-6 py-4">Cantidad/Activadas</td>
                                 <td class="px-6 py-4">Valor</td>
                                 <td class="px-6 py-4">Vigencia</td>
                                 <td class="px-6 py-4">Tienda</td>
@@ -41,7 +41,7 @@
                             <tr class="text-sm border-b border-gray-200">
                                 <td class="px-6 py-4"><a href="{{ route('lotes.show',$lote) }}">{{ $lote->id }}</a></td>
                                 <td class="px-6 py-4">{{ $lote->prefijo_gc }}</td>
-                                <td class="px-6 py-4">{{ $lote->cantidad_gc }}</td>
+                                <td class="px-6 py-4">{{ $lote->cantidad_gc }} / {{ $activeGiftcardsCounts[$lote->id] }}</td>
                                 <td class="px-6 py-4">{{ $lote->valor_gc }}</td>
                                 <td class="px-6 py-4">{{ $lote->vigencia_gc }}</td>
                                 <td class="px-6 py-4">{{ $lote->tienda->name }}</td>
