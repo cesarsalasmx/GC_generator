@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('prefijo_gc', 50)->nullable();  // prefijo_gc: varchar(50)
             $table->float('valor_gc', 8, 2);  // valor_gc: float, 8 dígitos en total y 2 decimales
             $table->foreignId('user_id')->nullable()->index();
+            $table->foreignId('tienda_id')->nullable()->index();
             $table->timestamps();
         });
     }

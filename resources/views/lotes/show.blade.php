@@ -63,4 +63,5 @@
             </div>
         </div>
     </div>
+    @include('modal')
 </x-app-layout>

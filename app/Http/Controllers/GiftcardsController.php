@@ -2,22 +2,38 @@
 
 namespace App\Http\Controllers;
 use App\Models\Giftcards;
+use App\Models\Lotes;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
-use App\Helpers\ShopifyHelper;
-use App\Helpers\WhatsappHelper;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class GiftcardsController extends Controller
 {
-    public function index(){
-        $giftcards = Giftcards::with('lote')->latest()->paginate(20);
-        $shopify = "";
-        return view('giftcards.index', compact('giftcards'));
+    public function index()
+    {
+        $user = Auth::user();
+
+        if ($user->role == 'shop_manager') {
+            $loteIds = Lotes::where('user_id', $user->id)->pluck('id');
+            $giftcards = GiftCards::whereIn('lotes_id', $loteIds)->latest()->paginate(20);
+        } else if ($user->role == 'administrator') {
+            $giftcards = GiftCards::latest()->paginate(20);
+        } else {
+            $giftcards = new LengthAwarePaginator([], 0, 10);
+        }
+        return view('giftcards.index', [
+            'giftcards' => $giftcards
+        ]);
     }
-    public function edit(Giftcards $giftcard){
-        $giftcard = Giftcards::with('lote')->findOrFail($giftcard->id);
-        return view ('giftcards.edit', [
+    public function edit(GiftCards $giftcard)
+    {
+        $user = Auth::user();
+        $giftcard = GiftCards::with('lote')->findOrFail($giftcard->id);
+
+        if ($user->role == 'shop_manager' && $giftcard->lote->user_id != $user->id) {
+            return redirect()->route('giftcards.index')->with('error', 'No autorizado para editar esta giftcard.');
+        }
+        return view('giftcards.edit', [
             'giftcard' => $giftcard
         ]);
     }

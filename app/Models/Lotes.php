@@ -15,11 +15,15 @@ class Lotes extends Model
         'cantidad_gc',
         'vigencia_gc',
         'prefijo_gc',
-        'valor_gc'
+        'valor_gc',
+        'user_id',
+        'tienda_id'
     ];
     public function giftcards()
     {
         return $this->hasMany(Giftcards::class);
     }
-
+    public function tienda(){
+        return $this->belongsTo(Tienda::class);
+    }
 }

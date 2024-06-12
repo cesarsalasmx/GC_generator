@@ -21,8 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
-
+    public function tiendas(){
+        return $this->belongsToMany(Tienda::class, 'tienda_user', 'user_id', 'tienda_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
