@@ -31,6 +31,7 @@ class TiendaController extends Controller
         $request->validate([
             'name' => 'required',
             'url' => 'required|url',
+            'lema' => 'required|lema',
             'name_shopify' => 'required',
             'access_token' => 'required',
         ]);
@@ -64,6 +65,7 @@ class TiendaController extends Controller
         $request->validate([
             'name' => 'required',
             'url' => 'required|url',
+            'lema' => 'required|lema',
             'name_shopify' => 'required',
             'access_token' => 'required',
         ]);

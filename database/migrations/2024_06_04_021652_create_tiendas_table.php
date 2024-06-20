@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('url');
+            $table->string('lema');
             $table->string('name_shopify');
             $table->string('access_token');
             $table->timestamps();

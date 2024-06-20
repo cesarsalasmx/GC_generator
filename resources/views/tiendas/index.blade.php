@@ -16,6 +16,7 @@
                                 <th class="px-6 py-4">Nombre</th>
                                 <th class="px-6 py-4">URL</th>
                                 <th class="px-6 py-4">Nombre Shopify</th>
+                                <th class="px-6 py-4">Lema</th>
                                 <th class="px-6 py-4">Access Token</th>
                                 <th class="px-6 py-4">Acciones</th>
                             </tr>
@@ -26,6 +27,7 @@
                                     <td class="px-6 py-4">{{ $tienda->name }}</td>
                                     <td class="px-6 py-4">{{ $tienda->url }}</td>
                                     <td class="px-6 py-4">{{ $tienda->name_shopify }}</td>
+                                    <td class="px-6 py-4">{{ $tienda->lema }}</td>
                                     <td class="px-6 py-4">{{ $tienda->access_token }}</td>
                                     <td class="px-6 py-4">
                                         <a href="{{ route('tiendas.edit', $tienda->id) }}">Editar</a>
