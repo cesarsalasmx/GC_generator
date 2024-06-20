@@ -31,7 +31,15 @@ Route::get('/resend', [PublicGiftcardController::class, 'resend'])->name('giftca
 Route::resource('tiendas', TiendaController::class)->middleware(['auth', 'verified']);
 Route::resource('lotes', LotesController::class)->middleware(['auth', 'verified']);
 Route::resource('giftcards', GiftcardsController::class)->middleware(['auth', 'verified']);
-Route::resource('tienda-user', TiendaUserController::class)->middleware(['auth', 'verified']);
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Rutas para TiendaUser
+    Route::get('tienda-user', [TiendaUserController::class, 'index'])->name('tienda-user.index');
+    Route::get('tienda-user/create', [TiendaUserController::class, 'create'])->name('tienda-user.create');
+    Route::post('tienda-user', [TiendaUserController::class, 'store'])->name('tienda-user.store');
+    Route::get('tienda-user/{user}/edit', [TiendaUserController::class, 'edit'])->name('tienda-user.edit');
+    Route::put('tienda-user/{user}', [TiendaUserController::class, 'update'])->name('tienda-user.update');
+});
 
 Route::get('/export-pdf/{loteId}', [ExportController::class, 'exportPDF'])->name('export.pdf');
 Route::get('lotes/{lote}/export', [LotesController::class, 'exportGiftcardsToCsv'])->name('lotes.export');

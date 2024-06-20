@@ -21,18 +21,21 @@
                     <x-nav-link :href="route('giftcards.index')" :active="request()->routeIs('giftcards.index')">
                         {{ __('Giftcards') }}
                     </x-nav-link>
+                    @if (isAdmin())
                     <x-nav-link :href="route('tiendas.index')" :active="request()->routeIs('tiendas.index')">
                             {{ __('Tiendas') }}
                     </x-nav-link>
-                    <!--@can('isAdmin') -->
-                        <!-- Aqui va el boton solo para admins-->
-                    <!--@endcan -->
+                    @endif
+                    @if (isAdmin())
                     <x-nav-link :href="route('tienda-user.index')" :active="request()->routeIs('tienda-user.index')">
                             {{ __('Asociar Tiendas/Usuarios') }}
                     </x-nav-link>
+                    @endif
+                    @if (isAdmin())
                     <x-nav-link :href="route('users.create')" :active="request()->routeIs('users.create')">
                             {{ __('Crear usuario') }}
                     </x-nav-link>
+                    @endif
                 </div>
             </div>
 

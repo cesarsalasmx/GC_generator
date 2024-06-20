@@ -10,25 +10,26 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                <form action="{{ route('tienda-user.update', $user->id) }}" method="POST">
-                    @method('PUT')
-                    @csrf
+                    <form action="{{ route('tienda-user.update', $user->id) }}" method="POST" class="space-y-6">
+                        @method('PUT')
+                        @csrf
 
-                    <div class="form-group">
-                        <label for="tienda_ids">Tiendas</label>
-                        <div>
-                            @foreach($tiendas as $tienda)
-                                <div class="form-check">
-                                    <input type="checkbox" name="tienda_ids[]" value="{{ $tienda->id }}" class="form-check-input"
-                                    {{ $user->tiendas->contains($tienda->id) ? 'checked' : '' }}>
-                                    <label class="form-check-label">{{ $tienda->name }}</label>
-                                </div>
-                            @endforeach
+                        <div class="form-group">
+                            <label class="block mb-2 text-lg font-semibold leading-tight text-gray-800">Tiendas</label>
+                            <div class="space-y-4">
+                                @foreach($tiendas as $tienda)
+                                    <div class="flex items-center form-check">
+                                        <input type="checkbox" name="tienda_ids[]" value="{{ $tienda->id }}" class="mt-1 mr-2 border-gray-200 rounded"
+                                            {{ $user->tiendas->contains($tienda->id) ? 'checked' : '' }}>
+                                        <label class="text-gray-800">{{ $tienda->name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
 
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </form>
+                        <button type="submit" class="px-4 py-2 text-white bg-gray-800 rounded">Actualizar</button>
+                    </form>
+
                 </div>
             </div>
         </div>

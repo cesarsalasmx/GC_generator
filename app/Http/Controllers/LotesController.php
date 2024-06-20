@@ -14,16 +14,19 @@ use Illuminate\Support\Facades\Log;
 
 class LotesController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $user = Auth::user();
         $tiendaId = $request->get('tienda_id');
         $query = Lotes::query();
-        $tiendas = Tienda::all();
+
         if ($user->role == 'shop_manager') {
-            $query->where('user_id', $user->id);
             $tiendas = $user->tiendas;
-        } else if ($user->role != 'administrator') {
-            // Si el usuario no es administrador ni shop_manager, retorna un paginador vacío
+            $query->where('user_id', $user->id);
+            $query->whereIn('tienda_id', $tiendas->pluck('id'));
+        } else if ($user->role == 'administrator') {
+            $tiendas = Tienda::all();
+        } else {
             $lotes = new LengthAwarePaginator([], 0, 10);
             $tiendas = new LengthAwarePaginator([], 0, 10);
             return view('lotes.index', [
@@ -36,12 +39,15 @@ class LotesController extends Controller
         if ($tiendaId) {
             $query->where('tienda_id', $tiendaId);
         }
+
         $lotes = $query->latest()->paginate();
+
         $activeGiftcardsCounts = [];
         foreach ($lotes as $lote) {
             $activeGiftcardsCounts[$lote->id] = LotesHelper::countActiveGiftcards($lote->id);
         }
-        return view ('lotes.index', [
+
+        return view('lotes.index', [
             'lotes' => $lotes,
             'tiendas' => $tiendas,
             'selectedTienda' => $tiendaId,
