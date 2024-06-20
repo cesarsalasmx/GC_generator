@@ -49,7 +49,10 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline">Registrar Usuario</button>
+                        <div class="flex items-center justify-between ">
+                            <a href="{{ route('dashboard') }}" class="text-indigo-600">Volver</a>
+                            <input type="submit" value="Crear lote" class="px-4 py-2 text-white bg-gray-800 rounded ">
+                        </div>
                     </form>
 
                 </div>

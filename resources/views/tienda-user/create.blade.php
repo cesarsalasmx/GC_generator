@@ -30,7 +30,10 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="px-4 py-2 text-white bg-gray-800 rounded ">Asociar</button>
+                        <div class="flex items-center justify-between ">
+                            <a href="{{ route('tienda-user.index') }}" class="text-indigo-600">Volver</a>
+                            <input type="submit" value="Crear lote" class="px-4 py-2 text-white bg-gray-800 rounded ">
+                        </div>
                     </form>
                 </div>
             </div>

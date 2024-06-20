@@ -24,4 +24,7 @@
     <span class="text-xs text-red-600">@error('access_token') {{ $message }} @enderror</span>
     <input type="text" name="access_token" class="w-full mb-4 border-gray-200 rounded" required>
 </div>
-<button type="submit">Crear</button>
+<div class="flex items-center justify-between ">
+    <a href="{{ route('tiendas.index') }}" class="text-indigo-600">Volver</a>
+    <input type="submit" value="Crear lote" class="px-4 py-2 text-white bg-gray-800 rounded ">
+</div>

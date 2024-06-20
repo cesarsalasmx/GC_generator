@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1>Giftcards del Lote #{{ $lote->id }}</h1>
+    <h1>{{ $lote->tienda->name }} - Lote #{{ $lote->id }}</h1>
     <table FRAME="void" RULES="rows">
         <tr>
             <td><strong>Valor:</strong> {{ $lote->valor_gc }}</td>
