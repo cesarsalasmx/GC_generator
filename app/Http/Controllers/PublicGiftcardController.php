@@ -26,7 +26,6 @@ class PublicGiftcardController extends Controller
             'email' => 'required|email',
             'phone' => 'required|string',
         ]);
-
         try {
             $codigoSinGuiones = CodeHelper::stripHyphens($request->internal_code);
             if (strlen($codigoSinGuiones) !== 12 || !ctype_alnum($codigoSinGuiones)) {
@@ -36,6 +35,7 @@ class PublicGiftcardController extends Controller
             $giftcard = Giftcards::where('internal_code', $codigoSinGuiones)
                 ->where('pin', $request->pin)
                 ->first();
+            Log::error('Info de tienda: ' . $giftcard->lote->tienda->name );
 
             if ($giftcard) {
                 if (!$giftcard->status) {
@@ -43,7 +43,7 @@ class PublicGiftcardController extends Controller
                     $valor_gc = (float) $giftcard->lote->valor_gc;
                     $fechaFormateada = Carbon::parse($vigencia_gc)->format('Y-m-d');
 
-                    $shopify = ShopifyHelper::create_gc($giftcard->code, $valor_gc, $fechaFormateada);
+                    $shopify = ShopifyHelper::create_gc($giftcard->code, $valor_gc, $fechaFormateada,$giftcard->lote->tienda->name_shopify,$giftcard->lote->tienda->access_token);
                     if(empty($shopify)){
                         return redirect()->back()->with('error', 'La giftcard no se ha activado correctamente.');
                     }

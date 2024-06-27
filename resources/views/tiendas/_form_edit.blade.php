@@ -23,7 +23,7 @@
 <div>
     <label class="text-xs text-gray-700 uppercase">Access Token:</label>
     <span class="text-xs text-red-600">@error('access_token') {{ $message }} @enderror</span>
-    <input type="text" name="access_token" value="{{ $tienda->access_token }}" class="w-full mb-4 border-gray-200 rounded" required>
+    <input type="text" name="access_token" value="" class="w-full mb-4 border-gray-200 rounded" required>
 </div>
 <div class="flex items-center justify-between ">
     <a href="{{ route('tiendas.index') }}" class="text-indigo-600">Volver</a>

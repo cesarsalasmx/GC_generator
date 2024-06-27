@@ -28,7 +28,7 @@
                                     <td class="px-6 py-4">{{ $tienda->url }}</td>
                                     <td class="px-6 py-4">{{ $tienda->name_shopify }}</td>
                                     <td class="px-6 py-4">{{ $tienda->lema }}</td>
-                                    <td class="px-6 py-4">{{ $tienda->access_token }}</td>
+                                    <td class="px-6 py-4">shpca_********</td>
                                     <td class="px-6 py-4">
                                         <a href="{{ route('tiendas.edit', $tienda->id) }}">Editar</a>
                                         <form action="{{ route('tiendas.destroy', $tienda->id) }}" method="POST" style="display:inline-block;">

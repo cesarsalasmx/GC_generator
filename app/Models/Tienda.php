@@ -11,8 +11,9 @@ class Tienda extends Model
     protected $fillable = [
         'name',
         'url',
+        'lema',
         'name_shopify',
-        'access_token'
+        'access_token',
     ];
 
     public function users(){
