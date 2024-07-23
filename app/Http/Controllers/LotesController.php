@@ -73,7 +73,9 @@ class LotesController extends Controller
             'vigencia_gc' => 'required|date|after_or_equal:today',
             'prefijo_gc' => 'nullable|max:10',
             'valor_gc' => 'required',
-            'tienda_id' => 'required'
+            'tienda_id' => 'required',
+            'rfc' => 'required',
+            'razon_social' => 'required'
         ]);
         $lote = $request->user()->Lotes()->create($validated);
         for($i=0; $i < $request->cantidad_gc; $i++){
@@ -107,7 +109,9 @@ class LotesController extends Controller
             'cantidad_gc' => 'required',
             'vigencia_gc' => 'required|date|after_or_equal:today',
             'prefijo_gc' => 'nullable|max:255',
-            'valor_gc' => 'required'
+            'valor_gc' => 'required',
+            'rfc' => 'required',
+            'razon_social' => 'required'
         ]);
 
         $lote->update($validated);
@@ -142,7 +146,7 @@ class LotesController extends Controller
             "Expires" => "0"
         ];
 
-        $columns = ['Codigo', 'Pin', 'Nombre', 'Telefono', 'Email', 'Estado de la giftcard', 'Valor', 'Vigencia', 'Prefijo', 'Tienda', 'Comentarios'];
+        $columns = ['Codigo', 'Pin', 'Nombre', 'Telefono', 'Email', 'Estado de la giftcard', 'Valor', 'Vigencia', 'Prefijo', 'Tienda', 'Comentarios','RFC','Razón Social'];
 
         $callback = function() use($giftcards, $lote, $columns) {
             $file = fopen('php://output', 'w');
@@ -161,6 +165,8 @@ class LotesController extends Controller
                     $lote->prefijo_gc,
                     $lote->tienda->name ?? '',
                     $lote->comentarios,
+                    $lote->rfc,
+                    $lote->razon_social
                 ];
 
                 fputcsv($file, $row);

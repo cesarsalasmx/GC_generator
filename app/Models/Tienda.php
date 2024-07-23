@@ -22,4 +22,17 @@ class Tienda extends Model
     public function lotes(){
         return $this->hasMany(Lotes::class);
     }
+    public static function getTienda($url)
+    {
+        $tienda = self::where('url', $url)->first(['name_shopify', 'access_token']);
+
+        if ($tienda) {
+            return [
+                'name_shopify' => $tienda->name_shopify,
+                'access_token' => $tienda->access_token,
+            ];
+        }
+
+        return null;
+    }
 }

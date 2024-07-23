@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->boolean('status'); // Estado, booleano
             $table->foreignId('lotes_id')->nullable()->index(); // Clave foránea vinculada a la tabla lotes
+            $table->string('sh_client_id')->nullable();
             $table->timestamps();
         });
     }

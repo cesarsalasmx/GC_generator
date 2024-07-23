@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class TiendaController extends Controller
 {
@@ -41,7 +41,7 @@ class TiendaController extends Controller
             'url' => $request->url,
             'lema' => $request->lema,
             'name_shopify' => $request->name_shopify,
-            'access_token' => Hash::make($request->access_token),
+            'access_token' => Crypt::encryptString($request->access_token),
         ]);
 
         return redirect()->route('tiendas.index')->with('success', 'Tienda creada exitosamente.');

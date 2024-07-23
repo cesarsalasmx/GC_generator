@@ -26,6 +26,14 @@
 <span class="text-xs text-red-600">@error('comentarios') {{ $message }} @enderror</span>
 <textarea name="comentarios" id="comentarios" rows="5" class="w-full mb-4 border-gray-200 rounded">{{ old('comentarios',$lote->comentarios) }}</textarea>
 
+<label class="text-xs text-gray-700 uppercase">RFC</label>
+<span class="text-xs text-red-600">@error('rfc') {{ $message }} @enderror</span>
+<input type="text" name="rfc" id="rfc" class="w-full mb-4 border-gray-200 rounded" value="{{ old('rfc',$lote->rfc) }}" required />
+
+<label class="text-xs text-gray-700 uppercase">Razón Social</label>
+<span class="text-xs text-red-600">@error('razon_social') {{ $message }} @enderror</span>
+<input type="text" name="razon_social" id="razon_social" class="w-full mb-4 border-gray-200 rounded" value="{{ old('razon_social',$lote->razon_social) }}" required />
+
 <div class="flex items-center justify-between ">
     <a href="{{ route('lotes.index') }}" class="text-indigo-600">Volver</a>
     <input type="submit" value="Crear lote" class="px-4 py-2 text-white bg-gray-800 rounded ">

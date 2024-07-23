@@ -28,6 +28,10 @@
             <td><strong>Prefijo:</strong> {{ $lote->prefijo_gc }}</td>
         </tr>
         <tr>
+            <td><strong>RFC:</strong> {{ $lote->rfc }}</td>
+            <td><strong>Razón Social:</strong> {{ $lote->razon_social }}</td>
+        </tr>
+        <tr>
             <td colspan="2"><strong>Comentarios:{{ $lote->comentarios }}</strong></td>
         </tr>
     </table>

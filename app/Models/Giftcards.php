@@ -5,6 +5,7 @@ use App\Models\Lotes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\Saldo;
 
 class Giftcards extends Model
 {
@@ -16,7 +17,8 @@ class Giftcards extends Model
         'phone',
         'email',
         'status',
-        'lotes_id'
+        'lotes_id',
+        'sh_client_id'
     ];
     public function lote()
     {
@@ -36,5 +38,9 @@ class Giftcards extends Model
     public static function generatePin()
     {
         return rand(100, 999); // Genera un número entre 100 y 999.
+    }
+    public function saldo()
+    {
+        return $this->hasMany(Saldo::class, 'id_giftcard');
     }
 }

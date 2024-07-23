@@ -17,7 +17,9 @@ class Lotes extends Model
         'prefijo_gc',
         'valor_gc',
         'user_id',
-        'tienda_id'
+        'tienda_id',
+        'rfc',
+        'razon_social'
     ];
     public function giftcards()
     {

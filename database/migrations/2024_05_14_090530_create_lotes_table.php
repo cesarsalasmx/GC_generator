@@ -20,6 +20,8 @@ return new class extends Migration
             $table->float('valor_gc', 8, 2);  // valor_gc: float, 8 dígitos en total y 2 decimales
             $table->foreignId('user_id')->nullable()->index();
             $table->foreignId('tienda_id')->nullable()->index();
+            $table->string('rfc');
+            $table->string('razon_social');
             $table->timestamps();
         });
     }

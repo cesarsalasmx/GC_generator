@@ -8,8 +8,9 @@ use App\Helpers\CodeHelper;
 use App\Helpers\ShopifyHelper;
 use Carbon\Carbon;
 use App\Helpers\WhatsappHelper;
+use App\Http\Controllers\Api\V1\SaldoController;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
-
 class PublicGiftcardController extends Controller
 {
     public function showActivationForm()
@@ -35,7 +36,6 @@ class PublicGiftcardController extends Controller
             $giftcard = Giftcards::where('internal_code', $codigoSinGuiones)
                 ->where('pin', $request->pin)
                 ->first();
-            Log::error('Info de tienda: ' . $giftcard->lote->tienda->name );
 
             if ($giftcard) {
                 if (!$giftcard->status) {
@@ -43,9 +43,11 @@ class PublicGiftcardController extends Controller
                     $valor_gc = (float) $giftcard->lote->valor_gc;
                     $fechaFormateada = Carbon::parse($vigencia_gc)->format('Y-m-d');
 
-                    $shopify = ShopifyHelper::create_gc($giftcard->code, $valor_gc, $fechaFormateada,$giftcard->lote->tienda->name_shopify,$giftcard->lote->tienda->access_token);
-                    if(empty($shopify)){
+                    $shopify = ShopifyHelper::activateGCShopify($giftcard->code, $valor_gc, $fechaFormateada, $request->name, $request->phone, $request->email, $giftcard->lote->tienda->name_shopify, Crypt::decryptString($giftcard->lote->tienda->access_token));
+                    if (empty($shopify)) {
                         return redirect()->back()->with('error', 'La giftcard no se ha activado correctamente.');
+                    }else if($shopify == 'error'){
+                        return redirect()->back()->with('error', 'El telefono y el email no coinciden, verifica la información.');
                     }
 
                     $giftcard->status = true;
@@ -53,7 +55,7 @@ class PublicGiftcardController extends Controller
                     $giftcard->name = $request->name;
                     $giftcard->phone = $request->phone;
                     $giftcard->save();
-
+                    SaldoController::store($giftcard->id,$shopify,$valor_gc);
                     WhatsappHelper::newWhatsWelcome($giftcard->code, $request->phone, $fechaFormateada, $valor_gc);
                     return redirect()->back()->with('success', 'Giftcard activada correctamente.');
                 } else {
@@ -67,22 +69,19 @@ class PublicGiftcardController extends Controller
             return redirect()->back()->with('error', 'Ocurrió un error al activar la giftcard. Inténtalo de nuevo más tarde.');
         }
     }
-    public function resend(Request $request){
+    public function resend(Request $request)
+    {
         $giftcard = Giftcards::where('id', $request->query('id'))->first();
         Log::error('Error al enviar whatsapp: ' . $giftcard);
 
-        if($giftcard->status && !empty($giftcard->phone)){
+        if ($giftcard->status && !empty($giftcard->phone)) {
             $fechaFormateada = Carbon::parse($giftcard->lote->vigencia_gc)->format('Y-m-d');
             $valor_gc = (float) $giftcard->lote->valor_gc;
 
             WhatsappHelper::newWhatsWelcome($giftcard->code, $giftcard->phone, $fechaFormateada, $valor_gc);
             return back()->with('success', '¡Mensaje de Whatsapp enviado con éxito!');
-        }
-        else{
+        } else {
             return back()->with('error', 'Error al enviar mensaje de whatsapp');
-
         }
-
     }
-
 }
